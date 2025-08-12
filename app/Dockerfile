@@ -1,6 +1,6 @@
 FROM ruby:3.4.4-alpine
 
-RUN apk add --no-cache build-base curl
+RUN apk add --no-cache build-base curl linux-headers
 
 WORKDIR /app
 
@@ -11,7 +11,6 @@ RUN bundle config set deployment 'true' \
 
 COPY . .
 
-ENV RACK_ENV=production
 EXPOSE 9292
 
-CMD ["bundle", "exec", "ruby", "app.rb"]
+CMD ["bundle", "exec", "rerun", "--background", "ruby app.rb"]

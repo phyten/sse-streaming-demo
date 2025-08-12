@@ -6,6 +6,11 @@ services:
       dockerfile: Dockerfile
     expose:
       - "9292"
+    volumes:
+      - ./app:/app:delegated
+      - /app/vendor
+    environment:
+      - RACK_ENV=development
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:9292/"]
       interval: 10s
