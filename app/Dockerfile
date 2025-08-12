@@ -14,4 +14,4 @@ COPY . .
 ENV RACK_ENV=production
 EXPOSE 9292
 
-CMD ["ruby", "app.rb"]
+CMD ["bundle", "exec", "ruby", "app.rb"]
