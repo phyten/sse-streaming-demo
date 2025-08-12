@@ -11,7 +11,6 @@ RUN bundle config set deployment 'true' \
 
 COPY . .
 
-ENV RACK_ENV=production
 EXPOSE 9292
 
 CMD ["bundle", "exec", "rerun", "--background", "ruby app.rb"]
