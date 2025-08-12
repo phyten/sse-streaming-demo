@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    expose:
+      - "9292"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9292/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
