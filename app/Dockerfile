@@ -14,4 +14,7 @@ COPY . .
 ENV RACK_ENV=production
 EXPOSE 9292
 
-CMD ["bundle", "exec", "ruby", "app.rb"]
+# For development with volume mounts
+RUN gem install rerun
+
+CMD ["bundle", "exec", "rerun", "--background", "ruby app.rb"]
