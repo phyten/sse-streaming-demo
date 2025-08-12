@@ -26,22 +26,14 @@ get "/sse" do
   stream(:keep_open) do |out|
     out << "retry: 2000\n\n"
 
-    Thread.new do
-      begin
-        tokens.each_with_index do |ch, i|
-          out << "event: token\n"
-          out << "data: #{({ index: i, text: ch }.to_json)}\n\n"
-          sleep 0.05
-        end
-        out << "event: done\n"
-        out << "data: [DONE]\n\n"
-      rescue => e
-        out << "event: error\n"
-        out << "data: #{({ error: e.class.name, message: e.message }.to_json)}\n\n"
-      ensure
-        out.close
-      end
+    tokens.each_with_index do |ch, i|
+      out << "event: token\n"
+      out << "data: #{({ index: i, text: ch }.to_json)}\n\n"
+      sleep 0.05
     end
+    out << "event: done\n"
+    out << "data: [DONE]\n\n"
+    out.close
   end
 end
 
